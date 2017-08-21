@@ -226,8 +226,8 @@ class Todo(models.Model):
 ```
 
 
-``` python manage.py makemigrations```
-``` python manage.py migrate ```
+```python manage.py makemigrations```
+```python manage.py migrate```
 
 
 Let's include the app we've just built into the project.
