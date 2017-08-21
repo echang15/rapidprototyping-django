@@ -101,7 +101,6 @@ You will need the **django** package at a bare minimum, so lets install that int
 
 ## Building a project skeleton
 Lets create your first project:
-Activate your virtual environment, goto your local code directory (like C:\Code, or  \user\Documents\code), and type:
 
 ```django-admin startproject todo```
 
