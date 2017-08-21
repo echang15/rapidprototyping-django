@@ -255,6 +255,7 @@ Bootstrap.
 
 ## Tests
 ## Django Admin
+``` python manage.py createsuperuser ```
 ## Running the CLI
 ### Migrations
 ### Shell
