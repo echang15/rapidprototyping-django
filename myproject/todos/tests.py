@@ -34,14 +34,14 @@ class TodoTests(TestCase):
         c = Client()
         data = {'description': 'new'}
         response = c.post('/todo/create/', data)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 302) # test redirection
         self.assertEqual(response.url, '/todo/2/')
 
     def test_todo_update_view(self):
         c = Client()
         data = {'description': 'changed'}
         response = c.post('/todo/1/update/', data)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 302) # test redirection
         self.assertEqual(response.url, '/todo/1/')
 
     def test_todo_delete_view(self):
