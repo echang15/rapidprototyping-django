@@ -12,7 +12,7 @@ from todos.models import Todo
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the todo index.")
+	return render(request, "todos/index.html")
 
 
 class todo_list(ListView):

@@ -1,4 +1,6 @@
+{% extends 'base.html' %}
 
+{% block body %}
 <a href="{% url 'todo_create' %}">Create a new Todo</a>
 
 <br><br>
@@ -17,3 +19,5 @@ Due State : {{ obj.due_date }} <br />
 {% if not object_list %}
 You don't have any todo's. Click the link above to make one
 {% endif %}
+
+{% endblock %}

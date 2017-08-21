@@ -101,3 +101,5 @@ ENV/
 
 # sqllite
 *.sqlite3
+.DS_Store
+
