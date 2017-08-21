@@ -25,19 +25,14 @@ class TodoTests(TestCase):
         response = c.get('/todos/')
         self.assertEqual(response.status_code, 200)
 
-    def test_todo_create_view(self):
-        c = Client()
-        response = c.get('/todo/create/')
-        self.assertEqual(response.status_code, 200)
-
-    def test_todo_create_view(self):
-        c = Client()
-        response = c.get('/todo/create/')
-        self.assertEqual(response.status_code, 200)
-
     def test_todo_detail_view(self):
         c = Client()
         response = c.get('/todo/1/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_todo_create_view(self):
+        c = Client()
+        response = c.get('/todo/create/')
         self.assertEqual(response.status_code, 200)
 
     def test_todo_update_view(self):
