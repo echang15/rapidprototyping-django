@@ -42,6 +42,6 @@ class TodoTests(TestCase):
 
     def test_todo_delete_view(self):
         c = Client()
-        response = c.get('/todo/1/delete/')
-        self.assertEqual(response.status_code, 200)
+        response = c.post('/todo/1/delete/')
+        self.assertEqual(response.status_code, 302) # test redirection
         self.assertEqual(Todo.objects.all().count(), 0)
