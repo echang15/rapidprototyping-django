@@ -15,11 +15,10 @@ from todos.models import Todo
 def index(request):
     return HttpResponse("Hello, world. You're at the todo index.")
 
-
-
 class todo_list(ListView):
 	''' This will display a list of all the todos '''
 	model = Todo
+
 
 class todo_details(DetailView):
 	''' This will display a page with the details of a single todo'''
