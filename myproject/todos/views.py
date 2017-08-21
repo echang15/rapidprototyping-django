@@ -22,12 +22,12 @@ class todo_list(ListView):
 	model = Todo
 
 class todo_details(DetailView):
-	''' This will display a page with the details of a single todo'''
+	''' This will display a page with the details of a single todo '''
 	model = Todo
 
 
 class todo_create(CreateView):
-	''' This will display a simple form and allow users to create a todo'''
+	''' This will display a simple form and allow users to create a todo '''
 	model = Todo
 	fields =['user','description','due_date']
 
@@ -35,6 +35,7 @@ class todo_create(CreateView):
 		return reverse('todo_details', kwargs={'pk' : self.object.pk})
 
 class todo_update(UpdateView):
+	''' update a todo, then redirect back to its details page '''
 	model = Todo
 	fields =['user','description','due_date']
 
@@ -42,6 +43,6 @@ class todo_update(UpdateView):
 		return reverse('todo_details', kwargs={'pk' : self.object.pk})
 
 class todo_delete(DeleteView):
-	''' Delete a specific todo (with confirmation page), and redirect back to list view'''
+	''' Delete a specific todo (with confirmation page), and redirect back to list view '''
 	model = Todo
 	success_url = reverse_lazy('todo_list')
