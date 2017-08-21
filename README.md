@@ -11,5 +11,9 @@ Prerequisites
 Ananconda - https://www.continuum.io/
 
 
+Create a new virtual environment:
+conda create -n djangocc django
+::wait::
+
 
 
