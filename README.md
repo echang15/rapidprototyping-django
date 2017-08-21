@@ -64,7 +64,7 @@ source <DIR>/bin/activate
 ```
 
 
-*NOTE: Your prompt will change after activating a virtual environment. This will let you know you did thing correctly, as well as help identify which environment is active.*
+*NOTE: Your prompt will change after activating a virtual environemnt. This will let you know you did thing correctly, as well as help identify which environment is active.*
 
 # Django Walkthrough
 We are going to create an app that will create some To-Dos. This is a very abbreviated tutorial that is tailored for our example application, and does not cover all of Django at great depth. For that, you should walk though the [official documentation](https://docs.djangoproject.com/en/1.11/) and [tutorial](https://docs.djangoproject.com/en/1.11/intro/tutorial01/).
@@ -148,8 +148,43 @@ This will create the following structure
 ```
 
 
+## Templates
+Let's work from the user up and start with creating an HTML template we want to display when people first visit our app. We will refer to this as the *home* or *index* template.
+
+Before we create the html templates we have to create the directory structure where Django expects to find them. From the *todos* folder above to the following:
+
+```mkdir -p templates/todos/```
+
+Then create the following html file:  templates/todos/index.html
+```
+<html>
+    <head></head>
+    <body>This is the home page</body>
+</html>
+```
+
+Your app folder should now look like this:
+
+```
+ ───todos
+    │   admin.py
+    │   apps.py
+    │   models.py
+    │   tests.py
+    │   views.py
+    │   __init__.py
+    │
+    └───templates
+    |   └───todos
+    |           index.html   
+    └───migrations
+            __init__.py
+```
+
+
+
 ## Views
-Let's your create first view
+Now that we have the html template we want the users to see, let's your create first view that will use that template.
 
 todos/views.py
 ```
@@ -159,7 +194,7 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the todo index.")
+    return render(request, "todos/index.html")
 ```
 
 
@@ -172,15 +207,10 @@ Create a new file urls.py in your todos directory
 todos/urls.py
 ```
 from django.conf.urls import url
-
 from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^/create/$', views.create, name='create')
-    url(r'^(?P<id>+)/$', views.detail, name='detail')
-    url(r'^(?P<id>+)/update/$', views.update, name='update')
-    url(r'^(?P<id>+)/delete/$', views.delete, name='delete')
 ]
 ```
 
@@ -192,8 +222,8 @@ from django.conf.urls import include,url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^', include('todos.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^', include('todos.urls')),
 ]
 
 ```
@@ -272,21 +302,11 @@ Did you know that Django has its own server built in? This means you can rapidly
 
 Django Plugins
 
-#### django-extensions
-https://github.com/django-extensions/django-extensions
-Django-extensions adds some awesome stuff like shell_plus and runserver_plus, which makes life much easier for rapid development
-#### django-modelutils
-https://github.com/jazzband/django-model-utils
+django-extentions
+django-modelutils
+django-crispyforms
 
-#### django-crispyforms
-https://github.com/django-crispy-forms/django-crispy-forms
-Want to customize the look of your forms, and have it automatically rendered in a bootstrap-ready format?
-
-#### django-braces
-https://github.com/brack3t/django-braces
-
-
-#### Make your stuff pretty
-You'll notice we did NOT cover making the app look stylized or pretty at all. That's intentional. Bootstrap is your friend.
+Make your stuff pretty
+Bootstrap
 
 
