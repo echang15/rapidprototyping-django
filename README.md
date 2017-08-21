@@ -3,19 +3,17 @@ Rapid Prototyping with Django
 
 ## Overview
 
-What you will learn
+You will create your first Python/Django app, with basic CRUD (Ceate, Read, Update, Delete) functionality. We will do this by building a simple todo application modeled after [todo-MVC](http://todomvc.com/)
 
-You will create your first Python/Django app, with basic CRUD (CReate, Update, Delete) functionality
+What you will learn:
 
-Prerequisites
-Ananconda - https://www.continuum.io/
+- How to get python up and running
+- How to install python packages
+- How to work with python virtual environments
+- How to build a basic prototype using the [Django framework](https://www.djangoproject.com/)
 
 
-Create a new virtual environment:
-conda create -n djangocc django
-::wait::
-
-## Installation
+## Python Installation
 ### Mac
 Python comes with macOS, so you can probably don't need to do anything other than confirm it is working. You can check this by typing ```python --version``` into Terminal. If Terminal prints something like Python 2.7.3 where the exact numbers you see may be different, you're all set! If you get an error message (or wish to have a different version than was included), you need to install and configure Python: 
 - https://www.python.org/downloads/
@@ -37,7 +35,7 @@ On Windows:
 
 In the case you don't have pip or setuptools installed, the manual installation instructions are found here: https://pip.pypa.io/en/stable/installing/
 
-tl;dr
+**tl;dr**
 ```
 $ curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
 $ python get-pip.py
@@ -46,7 +44,7 @@ $ python get-pip.py
 #### VirtualEnv
 Python “Virtual Environments” allow Python packages to be installed in an isolated location for a particular application, rather than being installed globally. This is something you want to do almost 100% of the time. It is fast, easy, and most importantly it's safe. Currently, there are two viable tools for creating Python virtual environments:
 
-**venv** is available by default in Python 3.4 and later, and installs **pip** and **setuptools** into created virtual environments in Python 3.4 and later.
+**venv** - this is available by default in Python 3.4 and later, and installs **pip** and **setuptools** into created virtual environments in Python 3.4 and later.
 
 Docs: https://docs.python.org/3/library/venv.html
 
@@ -55,7 +53,7 @@ python3 -m venv <DIR>
 source <DIR>/bin/activate
 ```
 
-**virtualenv** needs to be installed separately, but supports Python 2.6+ and Python 3.3+, and **pip**, **setuptools** and **wheel** are always installed into created virtual environments by default (regardless of Python version).
+**virtualenv** - this needs to be installed separately, but supports Python 2.6+ and Python 3.3+, and **pip**, **setuptools** and **wheel** are always installed into created virtual environments by default (regardless of Python version).
 
 Docs: https://virtualenv.pypa.io/en/stable/
 
@@ -69,18 +67,9 @@ source <DIR>/bin/activate
 *NOTE: Your prompt will change after activating a virtual environemnt. This will let you know you did thing correctly, as well as help identify which environment is active.*
 
 # Django Walkthrough
-We are going to create an app that will create some To-Dos
+We are going to create an app that will create some To-Dos. This is a very abrieiated tutorial that is tailored for our example application, and does not cover all of Django at great depth. For that, you should walk though the [offical documentation](https://docs.djangoproject.com/en/1.11/) and [tutorial](https://docs.djangoproject.com/en/1.11/intro/tutorial01/).
 
-create/update/blah blah
-
-Some urls/functions
-
-List
-Create
-Update
-Delete
-
-Django - https://www.djangoproject.com/
+For our application, we need a way to create, view, update, and delete todos. As a strech goal, we would like the ability to have different people login and be able to work with only the todos that belong to them. 
 
 ## Ready your environment
 ### Create a django virtual environment
@@ -106,7 +95,7 @@ c:\path\to\my\environments\django-env\Scripts\activate.bat
 You will need the **django** package at a bare minimum, so lets install that into our virtual environment. We will install other packages later as nessisary.
 
 ```
-$(danjo-env) pip install django
+(danjo-env)$ pip install django
 ```
 
 
@@ -117,7 +106,6 @@ Activate your virtual environment, goto your local code directory (like C:\Code,
 django-admin startproject todo
 
 ```
-
  ───myproject
     │   manage.py
     │
@@ -143,7 +131,7 @@ Ok, now we've created our Project Skeleton. Next, let's create our first applica
 ## Building your app skeleton
 in the new /myproject/ directory, we'll tell django to create a new application.
 
-python manage.py startapp todos
+```python manage.py startapp todos```
 
 This will create the following structure
 
@@ -173,7 +161,6 @@ from django.http import HttpResponse
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
-
 ```
 
 ## URLS
@@ -185,7 +172,6 @@ todos/urls.py
 ```
 
 ```
-
 
 
 ## Models
