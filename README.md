@@ -17,15 +17,25 @@ conda create -n djangocc django
 
 ## Installation
 ### Mac
-Python comes with macOS, so you can probably don't need to do anything other than confirm it is working. You can check this by typing ```python --version``` into Terminal. If you get an error message, you need to install Python. If Terminal prints something like Python 2.7.3 where the exact numbers you see may be different, you're all set!
-http://www.pyladies.com/blog/Get-Your-Mac-Ready-for-Python-Programming/
+Python comes with macOS, so you can probably don't need to do anything other than confirm it is working. You can check this by typing ```python --version``` into Terminal. If Terminal prints something like Python 2.7.3 where the exact numbers you see may be different, you're all set! If you get an error message (or wish to have a different version than was included), you need to install and configure Python: 
+- https://www.python.org/downloads/
+- http://docs.python-guide.org/en/latest/starting/install3/osx/#install3-osx
+- http://www.pyladies.com/blog/Get-Your-Mac-Ready-for-Python-Programming/
 ### Windows 
+Windows doesn't come with any useful (non-Microsoft) development tools. So you will most definitly have to install Python.
 https://www.howtogeek.com/197947/how-to-install-python-on-windows/
 
 ### Required Tools
-#### SetupTools
-#### Pip
-There are a few package managers that are specific to Python, and pip is the preferred one. Install instruction are found here: https://pip.pypa.io/en/stable/installing/
+#### Pip & SetupTools
+There are a few package managers that are specific to Python, and pip is the preferred one. If you have Python 2 >=2.7.9 or Python 3 >=3.4 installed from python.org, you will already have pip and setuptools, but may need to upgrade to the latest version.
+
+On Linux/MacOS:
+```pip install -U pip setuptools```
+
+On Windows:
+```python -m pip install -U pip setuptools```
+
+In the case you don't have pip or setuptools installed, the manual installation instructions are found here: https://pip.pypa.io/en/stable/installing/
 
 tl;dr
 ```
@@ -34,6 +44,7 @@ $ python get-pip.py
 ```
 
 #### VirtualEnv
+```pip install virtualenv```
 
 Django - https://www.djangoproject.com/ <br>
 
