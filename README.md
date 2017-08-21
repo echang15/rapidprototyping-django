@@ -70,10 +70,9 @@ Delete
 Lets create your first project:
 Activate your virtual environment, goto your local code directory (like C:\Code, or  \user\Documents\code), and type:
 
-django-admin startproject todo
+```django-admin startproject todo```
 
 ```
-
  ───myproject
     │   manage.py
     │
@@ -99,7 +98,7 @@ Ok, now we've created our Project Skeleton. Next, let's create our first applica
 ## Building your app skeleton
 in the new /myproject/ directory, we'll tell django to create a new application.
 
-python manage.py startapp todos
+```python manage.py startapp todos```
 
 This will create the following structure
 
