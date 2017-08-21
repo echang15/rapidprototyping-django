@@ -1,0 +1,15 @@
+
+<a href="{% url 'todo_create' %}">Create a new Todo</a>
+
+<br><br>
+{%  for obj in object_list%}
+
+------ <br />
+ID : {{ obj.id }} <br />
+Description : {{ obj.description }} <br />
+Due State : {{ obj.due_date }} <br />
+
+<a href="{% url 'todo_update' obj.id %}">Update</a> <a href="{% url 'todo_delete' obj.id %}">Delete</a> <br>
+
+
+{% endfor %}
