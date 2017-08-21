@@ -1,0 +1,2 @@
+# cfgdjango
+CFG Django Workshop
