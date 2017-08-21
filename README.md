@@ -2,6 +2,9 @@
 Rapid Prototyping with Django
 
 
+Django - https://www.djangoproject.com/ <br>
+
+
 What you will learn
 
 You will create your first Python/Django app, with basic CRUD (CReate, Update, Delete) functionality
