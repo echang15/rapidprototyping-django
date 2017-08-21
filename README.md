@@ -44,15 +44,31 @@ $ python get-pip.py
 ```
 
 #### VirtualEnv
-```pip install virtualenv```
+Python “Virtual Environments” allow Python packages to be installed in an isolated location for a particular application, rather than being installed globally. This is something you want to do almost 100% of the time. It is fast, easy, and most importantly it's safe. Currently, there are two viable tools for creating Python virtual environments:
 
-Django - https://www.djangoproject.com/ <br>
+**venv** is available by default in Python 3.4 and later, and installs **pip** and **setuptools** into created virtual environments in Python 3.4 and later.
 
-## Configuration
-### Mac
-### Windows
+Docs: https://docs.python.org/3/library/venv.html
+
+```
+python3 -m venv <DIR>
+source <DIR>/bin/activate
+```
+
+**virtualenv** needs to be installed separately, but supports Python 2.6+ and Python 3.3+, and **pip**, **setuptools** and **wheel** are always installed into created virtual environments by default (regardless of Python version).
+
+Docs: https://virtualenv.pypa.io/en/stable/
+
+```
+pip install virtualenv
+virtualenv <DIR>
+source <DIR>/bin/activate
+```
+
+
+*NOTE: Your prompt will change after activating a virtual environemnt. This will let you know you did thing correctly, as well as help identify which environment is active.*
+
 # Django Walkthrough
-
 We are going to create an app that will create some To-Dos
 
 create/update/blah blah
@@ -64,6 +80,34 @@ Create
 Update
 Delete
 
+Django - https://www.djangoproject.com/
+
+## Ready your environment
+### Create a django virtual environment
+This assumes you are using Python 2.7+ and the **virtualenv** tool. For Python 3.4+, please see above instructions for **venv**.
+```
+virtualenv /path/to/my/environments/django-env
+```
+
+On Linux/macOS:
+```
+virtualenv /path/to/my/environments/django-env
+source /path/to/my/environments/django-env/bin/activate
+```
+
+On Windows:
+```
+virtualenv c:\path\to\my\environments\django-env
+c:\path\to\my\environments\django-env\Scripts\activate.bat
+```
+
+
+## Install your dependancies
+You will need the **django** package at a bare minimum, so lets install that into our virtual environment. We will install other packages later as nessisary.
+
+```
+$(danjo-env) pip install django
+```
 
 
 ## Building a project skeleton
