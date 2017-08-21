@@ -3,7 +3,7 @@ Rapid Prototyping with Django
 
 ## Overview
 
-You will create your first Python/Django app, with basic CRUD (Ceate, Read, Update, Delete) functionality. We will do this by building a simple todo application modeled after [todo-MVC](http://todomvc.com/)
+You will create your first Python/Django app, with basic CRUD (Create, Read, Update, Delete) functionality. We will do this by building a simple todo application modeled after [todo-MVC](http://todomvc.com/)
 
 What you will learn:
 
@@ -20,7 +20,7 @@ Python comes with macOS, so you can probably don't need to do anything other tha
 - http://docs.python-guide.org/en/latest/starting/install3/osx/#install3-osx
 - http://www.pyladies.com/blog/Get-Your-Mac-Ready-for-Python-Programming/
 ### Windows 
-Windows doesn't come with any useful (non-Microsoft) development tools. So you will most definitly have to install Python.
+Windows doesn't come with any useful (non-Microsoft) development tools. So you will most definitely have to install Python.
 https://www.howtogeek.com/197947/how-to-install-python-on-windows/
 
 ### Required Tools
@@ -64,12 +64,12 @@ source <DIR>/bin/activate
 ```
 
 
-*NOTE: Your prompt will change after activating a virtual environemnt. This will let you know you did thing correctly, as well as help identify which environment is active.*
+*NOTE: Your prompt will change after activating a virtual environment. This will let you know you did thing correctly, as well as help identify which environment is active.*
 
 # Django Walkthrough
-We are going to create an app that will create some To-Dos. This is a very abbreviated tutorial that is tailored for our example application, and does not cover all of Django at great depth. For that, you should walk though the [offical documentation](https://docs.djangoproject.com/en/1.11/) and [tutorial](https://docs.djangoproject.com/en/1.11/intro/tutorial01/).
+We are going to create an app that will create some To-Dos. This is a very abbreviated tutorial that is tailored for our example application, and does not cover all of Django at great depth. For that, you should walk though the [official documentation](https://docs.djangoproject.com/en/1.11/) and [tutorial](https://docs.djangoproject.com/en/1.11/intro/tutorial01/).
 
-For our application, we need a way to create, view, update, and delete todos. As a strech goal, we would like the ability to have different people login and be able to work with only the todos that belong to them. 
+For our application, we need a way to create, view, update, and delete todos. As a stretch goal, we would like the ability to have different people login and be able to work with only the todos that belong to them. 
 
 ## Ready your environment
 ### Create a django virtual environment
@@ -92,7 +92,7 @@ c:\path\to\my\environments\django-env\Scripts\activate.bat
 
 
 ## Install your dependancies
-You will need the **django** package at a bare minimum, so lets install that into our virtual environment. We will install other packages later as nessisary.
+You will need the **django** package at a bare minimum, so lets install that into our virtual environment. We will install other packages later as necessary.
 
 ```
 (danjo-env)$ pip install django
@@ -165,7 +165,7 @@ def index(request):
 
 
 ## URLS
-To make things more managable and sane, let's separate application urls from each other.
+To make things more manageable and sane, let's separate application urls from each other.
 
 Create a new file urls.py in your todos directory
 
@@ -272,11 +272,21 @@ Did you know that Django has its own server built in? This means you can rapidly
 
 Django Plugins
 
-django-extentions
-django-modelutils
-django-crispyforms
+#### django-extensions
+https://github.com/django-extensions/django-extensions
+Django-extensions adds some awesome stuff like shell_plus and runserver_plus, which makes life much easier for rapid development
+#### django-modelutils
+https://github.com/jazzband/django-model-utils
 
-Make your stuff pretty
-Bootstrap
+#### django-crispyforms
+https://github.com/django-crispy-forms/django-crispy-forms
+Want to customize the look of your forms, and have it automatically rendered in a bootstrap-ready format?
+
+#### django-braces
+https://github.com/brack3t/django-braces
+
+
+#### Make your stuff pretty
+You'll notice we did NOT cover making the app look stylized or pretty at all. That's intentional. Bootstrap is your friend.
 
 
