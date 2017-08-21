@@ -171,9 +171,11 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return HttpResponse("Hello, world. You're at the todo index.")
 
 ```
+
+
 
 ## URLS
 To make things more managable and sane, let's separate application urls from each other.
@@ -182,10 +184,37 @@ Create a new file urls.py in your todos directory
 
 todos/urls.py
 ```
+from django.conf.urls import url
+
+from . import views
+
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^/create/$', views.create, name='create')
+    url(r'^(?P<id>+)/$', views.detail, name='detail')
+    url(r'^(?P<id>+)/update/$', views.update, name='update')
+    url(r'^(?P<id>+)/delete/$', views.delete, name='delete')
+]
+```
+
+Now we need to tell the project's URL's file to look for the todo app's specific urls...
+
+myproject/urls.py
+```
+from django.conf.urls import include,url
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^', include('todos.urls')),
+    url(r'^admin/', admin.site.urls),
+]
 
 ```
 
 
+## Tests
+
+Lets start our first test.
 
 ## Models
 
@@ -204,8 +233,12 @@ from django.contrib.auth.models import User
 class Todo(models.Model):
     user =  models.ForeignKey(User, unique=True)
     description = models.CharField(max_length=128, null=False, blank=False)
-    due_State = models.DateField(null=True, blank=True)
+    due_date = models.DateField(null=True, blank=True)
 ```
+
+
+``` python manage.py makemigrations```
+``` python manage.py migrate ```
 
 
 Let's include the app we've just built into the project.
