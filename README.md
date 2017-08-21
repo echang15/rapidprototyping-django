@@ -128,7 +128,7 @@ From the Django Tutorial (https://docs.djangoproject.com/en/1.11/intro/tutorial0
 Ok, now we've created our Project Skeleton. Next, let's create our first application within the project
 
 ## Building your app skeleton
-in the new /myproject/ directory, we'll tell django to create a new application.
+In the new /myproject/ directory, we'll tell django to create a new application.
 
 ```python manage.py startapp todos```
 
