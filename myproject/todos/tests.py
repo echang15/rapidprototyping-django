@@ -44,3 +44,4 @@ class TodoTests(TestCase):
         c = Client()
         response = c.get('/todo/1/delete/')
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(Todo.objects.all().count(), 0)
