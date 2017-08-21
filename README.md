@@ -27,14 +27,36 @@ Django - https://www.djangoproject.com/ <br>
 ### Windows
 # Django Walkthrough
 ## Building a project skeleton
+Lets create your first project:
+Activate your virtual environment, goto your local code directory (like C:\Code, or  \user\Documents\code), and type:
+
+django-admin startproject todo
+
+```
+C:.
+│   README.md
+│
+└───todo
+    │   manage.py
+    │
+    └───todo
+            settings.py
+            urls.py
+            wsgi.py
+            __init__.py
+```
+
 ## Building your app skeleton
 ## Models
+
+in /models/todo.py, 
 ## Forms
 ## Views
 ### Class based
 ### Function based
 ## Templates
 ## Tests
+## Django Admin
 ## Running the CLI
 ### Migrations
 ### Shell
