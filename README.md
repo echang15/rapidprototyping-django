@@ -259,7 +259,12 @@ Bootstrap.
 ## Running the CLI
 ### Migrations
 ### Shell
+Did you know Django has its own interactive shell?
+``` python manage.py shell ```
 ### HTTP Server
+Did you know that Django has its own server built in? This means you can rapidly build/test/debug your code on your local machine, great increasing your speed!
+
+``` python manage.py runserver ```
 ### Tests
 
 
