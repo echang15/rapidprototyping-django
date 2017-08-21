@@ -64,7 +64,7 @@ source <DIR>/bin/activate
 ```
 
 
-*NOTE: Your prompt will change after activating a virtual environemnt. This will let you know you did thing correctly, as well as help identify which environment is active.*
+*NOTE: Your prompt will change after activating a virtual environment. This will let you know you did thing correctly, as well as help identify which environment is active.*
 
 # Django Walkthrough
 We are going to create an app that will create some To-Dos. This is a very abbreviated tutorial that is tailored for our example application, and does not cover all of Django at great depth. For that, you should walk though the [official documentation](https://docs.djangoproject.com/en/1.11/) and [tutorial](https://docs.djangoproject.com/en/1.11/intro/tutorial01/).
@@ -272,11 +272,21 @@ Did you know that Django has its own server built in? This means you can rapidly
 
 Django Plugins
 
-django-extentions
-django-modelutils
-django-crispyforms
+#### django-extensions
+https://github.com/django-extensions/django-extensions
+Django-extensions adds some awesome stuff like shell_plus and runserver_plus, which makes life much easier for rapid development
+#### django-modelutils
+https://github.com/jazzband/django-model-utils
 
-Make your stuff pretty
-Bootstrap
+#### django-crispyforms
+https://github.com/django-crispy-forms/django-crispy-forms
+Want to customize the look of your forms, and have it automatically rendered in a bootstrap-ready format?
+
+#### django-braces
+https://github.com/brack3t/django-braces
+
+
+#### Make your stuff pretty
+You'll notice we did NOT cover making the app look stylized or pretty at all. That's intentional. Bootstrap is your friend.
 
 
