@@ -101,7 +101,6 @@ You will need the **django** package at a bare minimum, so lets install that int
 
 ## Building a project skeleton
 Lets create your first project:
-Activate your virtual environment, goto your local code directory (like C:\Code, or  \user\Documents\code), and type:
 
 ```django-admin startproject todo```
 
@@ -129,7 +128,7 @@ From the Django Tutorial (https://docs.djangoproject.com/en/1.11/intro/tutorial0
 Ok, now we've created our Project Skeleton. Next, let's create our first application within the project
 
 ## Building your app skeleton
-in the new /myproject/ directory, we'll tell django to create a new application.
+In the new /myproject/ directory, we'll tell django to create a new application.
 
 ```python manage.py startapp todos```
 
