@@ -67,7 +67,7 @@ source <DIR>/bin/activate
 *NOTE: Your prompt will change after activating a virtual environemnt. This will let you know you did thing correctly, as well as help identify which environment is active.*
 
 # Django Walkthrough
-We are going to create an app that will create some To-Dos. This is a very abrieiated tutorial that is tailored for our example application, and does not cover all of Django at great depth. For that, you should walk though the [offical documentation](https://docs.djangoproject.com/en/1.11/) and [tutorial](https://docs.djangoproject.com/en/1.11/intro/tutorial01/).
+We are going to create an app that will create some To-Dos. This is a very abbreviated tutorial that is tailored for our example application, and does not cover all of Django at great depth. For that, you should walk though the [offical documentation](https://docs.djangoproject.com/en/1.11/) and [tutorial](https://docs.djangoproject.com/en/1.11/intro/tutorial01/).
 
 For our application, we need a way to create, view, update, and delete todos. As a strech goal, we would like the ability to have different people login and be able to work with only the todos that belong to them. 
 

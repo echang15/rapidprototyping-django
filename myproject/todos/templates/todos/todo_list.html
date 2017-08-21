@@ -2,10 +2,10 @@
 <a href="{% url 'todo_create' %}">Create a new Todo</a>
 
 <br><br>
-{%  for obj in object_list%}
+{%  for obj in object_list %}
 
 ------ <br />
-ID : {{ obj.id }} <br />
+ID : <a href="{% url 'todo_details' obj.id %}">{{ obj.id }}</a> <br />
 Description : {{ obj.description }} <br />
 Due State : {{ obj.due_date }} <br />
 
@@ -13,3 +13,7 @@ Due State : {{ obj.due_date }} <br />
 
 
 {% endfor %}
+
+{% if not object_list %}
+You don't have any todo's. Click the link above to make one
+{% endif %}

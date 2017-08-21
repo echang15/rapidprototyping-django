@@ -8,5 +8,7 @@ class Todo(models.Model):
 	description = models.CharField(max_length=128, null=False, blank=False)
 	due_date = models.DateField(null=True, blank=True)
 
+	
 	def __str__(self):
-		return self.id
+		''' this sets the default return for this object'''
+		return self.description
