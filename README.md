@@ -231,14 +231,44 @@ urlpatterns = [
 
 ## Tests
 
-Lets start our first test.
+Lets start our first test. 
+
+todos/tests.py
+```
+from django.test import TestCase
+from django.test.client import Client
+
+from .models import Todo
+
+
+class TodoTests(TestCase):
+
+    def setUp(self):
+        """Lets create one todo that we can use within the tests below"""
+        self.example_todo = Todo.objects.create(description="test")
+
+    def test_model_fields_exist(self):
+        self.assertTrue(Todo._meta.get_field('user'))
+        self.assertTrue(Todo._meta.get_field('description'))
+        self.assertTrue(Todo._meta.get_field('due_date'))
+```
+
+To run this test, type ```python manage.py test```
+If this test passes, you know that you've created the todo model's fields.
+
+
+###Why Test?
+Because code inevitably changes and grows. As you add and modify features, you run tests against all your new and old code to make sure nothing is broken. Always test before pushing things up into higher environments, or into source code control!
+
+###What to Test?
+Any custom logic, such as form validations, view redirects, permission-based views, etc.
 
 
 ## Models
 
 Defining your models
 
-A model is the single, definitive source of truth about your data. It contains the essential fields and behaviors of the data you’re storing
+A model is the single, definitive source of truth about your data. It contains the essential fields and behaviors of the data you're storing
 
 
 in the /todos/models.py file, lets define our models.
