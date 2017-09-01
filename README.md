@@ -282,7 +282,16 @@ class Todo(models.Model):
     user =  models.ForeignKey(User, unique=True)
     description = models.CharField(max_length=128, null=False, blank=False)
     due_date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        """this sets the default return for this object"""
+        return self.description
 ```
+
+### What are we doing?
+We are telling django that we're creating a object called Todo. This model has 3 properties: user, description, and due_date, and they have attributes. For the description, we're telling django that the max length is 128 characters, and there must be a value there to pass validation.
+
+
 
 
 ```python manage.py makemigrations```
