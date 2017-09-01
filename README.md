@@ -228,6 +228,17 @@ urlpatterns = [
 
 ```
 
+###Checking to see if everything works
+Now that we've created our first views (views.py), hooked it into our router (urls.py), and template (index.html), lets try running our app.
+
+```python manage.py runserver```
+
+This will spin up a local server of your code. From your browser, goto the following url:
+http://localhost:8000
+
+You should see your rendered index.html file.
+
+
 
 ## Tests
 
@@ -262,6 +273,10 @@ Because code inevitably changes and grows. As you add and modify features, you r
 
 ###What to Test?
 Any custom logic, such as form validations, view redirects, permission-based views, etc.
+
+
+
+
 
 
 ## Models
@@ -331,7 +346,7 @@ Bootstrap.
 Did you know Django has its own interactive shell?
 ``` python manage.py shell ```
 ### HTTP Server
-Did you know that Django has its own server built in? This means you can rapidly build/test/debug your code on your local machine, great increasing your speed!
+Did you know that Django has its own server built in? This means you can rapidly build/test/debug your code on your local machine, greatly increasing your productivity!
 
 ``` python manage.py runserver ```
 ### Tests
