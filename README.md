@@ -12,6 +12,9 @@ What you will learn:
 - How to work with python virtual environments
 - How to build a basic prototype using the [Django framework](https://www.djangoproject.com/)
 
+What we will NOT cover:
+- HTML/CSS/JS - There are plenty of other tutorials out there.
+
 
 ## Python Installation
 ### Mac
@@ -148,6 +151,22 @@ This will create the following structure
 ```
 
 
+Let's include the app we've just built into the project.
+
+edit your myproject/settings.py file to include your new application:
+```
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'todos.apps.TodosConfig'
+]
+```
+
+
 ## Templates
 Let's work from the user up and start with creating an HTML template we want to display when people first visit our app. We will refer to this as the *home* or *index* template.
 
@@ -239,6 +258,33 @@ http://localhost:8000
 You should see your rendered index.html file.
 
 
+## Models
+
+Defining your models
+
+A model is the single, definitive source of truth about your data. It contains the essential fields and behaviors of the data you're storing
+
+
+in the /todos/models.py file, lets define our models.
+```
+from django.db import models
+# Leverage Django's built-in User models
+from django.contrib.auth.models import User
+
+# Create your models here.
+class Todo(models.Model):
+    user =  models.ForeignKey(User, unique=True)
+    description = models.CharField(max_length=128, null=False, blank=False)
+    due_date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        """this sets the default return for this object"""
+        return self.description
+```
+
+### What are we doing?
+We are telling django that we're creating a object called Todo. This model has 3 properties: user, description, and due_date, and they have attributes. For the description, we're telling django that the max length is 128 characters, and there must be a value there to pass validation.
+
 
 ## Tests
 
@@ -278,55 +324,9 @@ Any custom logic, such as form validations, view redirects, permission-based vie
 
 
 
-
-## Models
-
-Defining your models
-
-A model is the single, definitive source of truth about your data. It contains the essential fields and behaviors of the data you're storing
-
-
-in the /todos/models.py file, lets define our models.
-```
-from django.db import models
-# Leverage Django's built-in User models
-from django.contrib.auth.models import User
-
-# Create your models here.
-class Todo(models.Model):
-    user =  models.ForeignKey(User, unique=True)
-    description = models.CharField(max_length=128, null=False, blank=False)
-    due_date = models.DateField(null=True, blank=True)
-
-    def __str__(self):
-        """this sets the default return for this object"""
-        return self.description
-```
-
-### What are we doing?
-We are telling django that we're creating a object called Todo. This model has 3 properties: user, description, and due_date, and they have attributes. For the description, we're telling django that the max length is 128 characters, and there must be a value there to pass validation.
-
-
-
-
 ```python manage.py makemigrations```
 ```python manage.py migrate```
 
-
-Let's include the app we've just built into the project.
-
-edit your myproject/settings.py file to include your new application:
-```
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'todos.apps.TodosConfig'
-]
-```
 
 
 ## Forms
