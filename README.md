@@ -337,13 +337,126 @@ Any custom logic, such as form validations, view redirects, permission-based vie
 
 
 
-## Ok, so we have a model now, how do we interact with it?
+Ok, so we have a model now and have a basic test against it, how do we interact with it?
 
 
 ## Forms
+### What is a Form?
+From https://docs.djangoproject.com/en/1.11/topics/forms/ :
+"In HTML, a form is a collection of elements inside <form>...</form> that allow a visitor to do things like enter text, select options, manipulate objects or controls, and so on, and then send that information back to the server."
+
+### What is a Django Form?
+
+From https://docs.djangoproject.com/en/1.11/topics/forms/ :
+Django handles three distinct parts of the work involved in forms:
+
+- preparing and restructuring data to make it ready for rendering
+- creating HTML forms for the data
+- receiving and processing submitted forms and data from the client
+
+While there are ways to customize and extend forms to suit your own need, we won't cover that today. We will use Django's ModelForms, which is free and built-in.
+
+
+
 ## Views
 ### Class based
 ### Function based
+
+So in our views.py, instead of writing lots of code to this, we can leverage the generic class based views to do the same thing in a very small set of code:
+
+```
+class todo_list(ListView):
+    ''' This will display a list of all the todos '''
+    model = Todo
+
+
+class todo_details(DetailView):
+    ''' This will display a page with the details of a single todo '''
+    model = Todo
+
+
+class todo_create(CreateView):
+    ''' This will display a simple form and allow users to create a todo '''
+    model = Todo
+    fields = ['user', 'description', 'due_date']
+
+    def get_success_url(self):
+        return reverse('todo_details', kwargs={'pk': self.object.pk})
+
+
+class todo_update(UpdateView):
+    ''' update a todo, then redirect back to its details page '''
+    model = Todo
+    fields = ['user', 'description', 'due_date']
+
+    def get_success_url(self):
+        return reverse('todo_details', kwargs={'pk': self.object.pk})
+
+
+class todo_delete(DeleteView):
+    ''' Delete a specific todo (with confirmation page), and redirect back to list view '''
+    model = Todo
+    success_url = reverse_lazy('todo_list')
+```
+
+
+We'll also need to update our urls.py to link to these:
+```
+    urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^todos/$', views.todo_list.as_view(), name='todo_list'),
+    url(r'^todo/create/$', views.todo_create.as_view(), name='todo_create'),
+    url(r'^todo/(?P<pk>\d+)/$', views.todo_details.as_view(), name='todo_details'),
+    url(r'^todo/(?P<pk>\d+)/update/$', views.todo_update.as_view(), name='todo_update'),
+    url(r'^todo/(?P<pk>\d+)/delete/$', views.todo_delete.as_view(), name='todo_delete'),
+]
+
+```
+
+Finally,
+we'll need to create the HTML template files that the views are looking for. Do to this, we'll need place the files in /myproject/templates/todos
+
+todo_list.html
+```
+{% extends 'base.html' %}
+
+{% block body %}
+<a href="{% url 'todo_create' %}">Create a new Todo</a>
+
+<br><br>
+{%  for obj in object_list %}
+
+------ <br />
+ID : <a href="{% url 'todo_details' obj.id %}">{{ obj.id }}</a> <br />
+Description : {{ obj.description }} <br />
+Due State : {{ obj.due_date }} <br />
+
+<a href="{% url 'todo_update' obj.id %}">Update</a> <a href="{% url 'todo_delete' obj.id %}">Delete</a> <br>
+
+
+{% endfor %}
+
+{% if not object_list %}
+You don't have any todo's. Click the link above to make one
+{% endif %}
+
+{% endblock %}
+```
+
+todo_update_form.html
+```
+{% extends 'base.html' %}
+
+{% block body %}
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save" />
+</form>
+{% endblock %}
+```
+
+
+
 ## Templates
 
 Bootstrap.
