@@ -94,7 +94,7 @@ c:\path\to\my\environments\django-env\Scripts\activate.bat
 ```
 
 
-## Install your dependancies
+## Install your dependencies
 You will need the **django** package at a bare minimum, so lets install that into our virtual environment. We will install other packages later as necessary.
 
 ```
@@ -286,6 +286,20 @@ class Todo(models.Model):
 We are telling django that we're creating a object called Todo. This model has 3 properties: user, description, and due_date, and they have attributes. For the description, we're telling django that the max length is 128 characters, and there must be a value there to pass validation.
 
 
+
+
+Ok, we've defined our models, but we havent created them in our database yet; lets do that.
+
+
+```python manage.py makemigrations```
+```python manage.py migrate```
+
+Ok, what did we just do? We just told django to create a migration script that will analyze the current state of the DB, and script out the changes that need to happen in order to sync it with the current definition. Then, we executed the changes.
+
+#### Why two steps instead of one?
+the migration scripts can be copied across to other environments, so we can apply the changes to other copies of the application...
+
+
 ## Tests
 
 Lets start our first test. 
@@ -323,10 +337,7 @@ Any custom logic, such as form validations, view redirects, permission-based vie
 
 
 
-
-```python manage.py makemigrations```
-```python manage.py migrate```
-
+## Ok, so we have a model now, how do we interact with it?
 
 
 ## Forms
