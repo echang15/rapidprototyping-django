@@ -343,18 +343,13 @@ Ok, so we have a model now and have a basic test against it, how do we interact 
 ## Forms
 ### What is a Form?
 From https://docs.djangoproject.com/en/1.11/topics/forms/ :
-"In HTML, a form is a collection of elements inside <form>...</form> that allow a visitor to do things like enter text, select options, manipulate objects or controls, and so on, and then send that information back to the server."
-
-### What is a Django Form?
-
-From https://docs.djangoproject.com/en/1.11/topics/forms/ :
-Django handles three distinct parts of the work involved in forms:
+"In HTML, a form is a collection of elements inside <form>...</form> that allow a visitor to do things like enter text, select options, manipulate objects or controls, and so on, and then send that information back to the server." Django handles three distinct parts of the work involved in forms:
 
 - preparing and restructuring data to make it ready for rendering
 - creating HTML forms for the data
 - receiving and processing submitted forms and data from the client
 
-While there are ways to customize and extend forms to suit your own need, we won't cover that today. We will use Django's ModelForms, which is free and built-in.
+While there are ways to customize and extend forms to suit your own need, we won't cover that today. We will use Django's ModelForms, which is free and built-in. (https://docs.djangoproject.com/en/1.11/topics/forms/modelforms/)
 
 
 
