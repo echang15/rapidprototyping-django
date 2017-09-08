@@ -475,7 +475,27 @@ Todo Count: {{todo_count}}<br>
 
 
 ## Django Admin
+What if we need an administrative back-end where we can maintain our data, users, etc? Django built=in Admin app gives this all to us for free!
+
+First, we need to create an admin user
 ``` python manage.py createsuperuser ```
+
+in todos/admin.py
+```
+from django.contrib import admin
+
+# Register your models here.
+from .models import Todo
+
+admin.site.register(Todo)
+
+```
+
+To test this, let's run our local test server
+``` python manage runserver```
+
+on your browser, go to http://localhost:8000/admin
+
 
 
 ### Further Reading
