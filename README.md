@@ -354,8 +354,8 @@ While there are ways to customize and extend forms to suit your own need, we won
 
 
 ## Views
-### Class based
-### Function based
+
+### Class based views
 
 So in our views.py, instead of writing lots of code to this, we can leverage the generic class based views to do the same thing in a very small set of code:
 
@@ -394,7 +394,6 @@ class todo_delete(DeleteView):
     success_url = reverse_lazy('todo_list')
 ```
 
-
 We'll also need to update our urls.py to link to these:
 ```
     urlpatterns = [
@@ -407,7 +406,6 @@ We'll also need to update our urls.py to link to these:
 ]
 
 ```
-
 Finally,
 we'll need to create the HTML template files that the views are looking for. Do to this, we'll need place the files in /myproject/templates/todos
 
@@ -449,7 +447,7 @@ todo_update_form.html
 </form>
 {% endblock %}
 ```
-
+### Function based views
 
 
 ## Templates
