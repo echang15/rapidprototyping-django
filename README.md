@@ -219,9 +219,9 @@ def index(request):
 
 
 ## URLS
-To make things more manageable and sane, let's separate application urls from each other.
+To make things more manageable, let's separate application level urls from project level ones.
 
-Create a new file urls.py in your todos directory
+Create a new file `urls.py` in your todos directory
 
 todos/urls.py
 ```
@@ -262,10 +262,9 @@ You should see your rendered index.html file.
 
 Defining your models
 
-A model is the single, definitive source of truth about your data. It contains the essential fields and behaviors of the data you're storing
+A model is the single, definitive source of truth about your data. It contains the essential fields and behaviors of the data you're storing. Each model is a Python class that subclasses `django.db.models.Model`. Each attribute of the model represents a database field. With all of this, Django gives you an automatically-generated database-access API; see https://docs.djangoproject.com/en/1.11/topics/db/queries/
 
-
-in the /todos/models.py file, lets define our models.
+In the `/todos/models.py` file, lets define our models.
 ```
 from django.db import models
 # Leverage Django's built-in User models
@@ -285,11 +284,7 @@ class Todo(models.Model):
 ### What are we doing?
 We are telling django that we're creating a object called Todo. This model has 3 properties: user, description, and due_date, and they have attributes. For the description, we're telling django that the max length is 128 characters, and there must be a value there to pass validation.
 
-
-
-
 Ok, we've defined our models, but we havent created them in our database yet; lets do that.
-
 
 ```python manage.py makemigrations```
 ```python manage.py migrate```
@@ -357,7 +352,9 @@ While there are ways to customize and extend forms to suit your own need, we won
 
 ### Class based views
 
-So in our views.py, instead of writing lots of code to this, we can leverage the generic class based views to do the same thing in a very small set of code:
+A view is simply a callable which takes a request and returns a response. This can be more than just a function, and Django provides a variety of generic classes which can be used as views. These allow you to structure your views and reuse code by harnessing inheritance and mixins. See: (https://docs.djangoproject.com/en/1.11/ref/class-based-views/)
+
+So in our views.py, instead of hand crafting CRUD functions we can leverage the generic class based views to do the same thing in a very small amount of code:
 
 ```
 class todo_list(ListView):
