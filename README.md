@@ -247,7 +247,7 @@ urlpatterns = [
 
 ```
 
-###Checking to see if everything works
+### Checking to see if everything works
 Now that we've created our first views (views.py), hooked it into our router (urls.py), and template (index.html), lets try running our app.
 
 ```python manage.py runserver```
