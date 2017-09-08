@@ -472,28 +472,21 @@ Todo Count: {{todo_count}}<br>
 
 ## Templates
 
-Bootstrap.
 
-## Tests
+
 ## Django Admin
 ``` python manage.py createsuperuser ```
-## Running the CLI
-### Migrations
-### Shell
-Did you know Django has its own interactive shell?
-``` python manage.py shell ```
-### HTTP Server
-Did you know that Django has its own server built in? This means you can rapidly build/test/debug your code on your local machine, greatly increasing your productivity!
-
-``` python manage.py runserver ```
-### Tests
 
 
-### Next Steps
+### Further Reading
+
+Intrigued? Want to learn more?
+www.djangoproject.com
+
 
 Django Plugins
 
-django-extentions
+django-extensions
 django-modelutils
 django-crispyforms
 
