@@ -12,7 +12,8 @@ from todos.models import Todo
 
 
 def index(request):
-	return render(request, "todos/index.html")
+    todo_count = Todo.objects.all().count()
+    return render(request, "todos/index.html",{'todo_count': todo_count})
 
 
 class todo_list(ListView):

@@ -98,7 +98,7 @@ c:\path\to\my\environments\django-env\Scripts\activate.bat
 You will need the **django** package at a bare minimum, so lets install that into our virtual environment. We will install other packages later as necessary.
 
 ```
-(danjo-env)$ pip install django
+(django-env)$ pip install django
 ```
 
 
@@ -441,7 +441,33 @@ todo_update_form.html
 </form>
 {% endblock %}
 ```
+
 ### Function based views
+
+What if we need more than just CRUD-based views? 
+
+Let's add a count of all Todos to our index view and page.
+
+
+views.py
+```
+def index(request):
+    todo_count = Todo.objects.all().count()
+    return render(request, "todos/index.html",{'todo_count': todo_count})
+```
+
+and in templates/todos/index.html
+
+```
+{% extends 'base.html' %}
+
+{% block body %}
+
+Todo Count: {{todo_count}}<br>
+<a href="{% url 'todo_list' %}">List all todos</a>
+
+{% endblock %}
+```
 
 
 ## Templates
