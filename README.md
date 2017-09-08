@@ -3,7 +3,7 @@ Rapid Prototyping with Django
 
 ## Overview
 
-You will create your first Python/Django app, with basic CRUD (Create, Read, Update, Delete) functionality. We will do this by building a simple todo application modeled after [todo-MVC](http://todomvc.com/)
+You will create your first Python/Django app, with basic CRUD (Create, Read, Update, Delete) functionality. We will do this by building a simple "To-do" application modeled after [todo-MVC](http://todomvc.com/)
 
 What you will learn:
 
@@ -67,10 +67,10 @@ source <DIR>/bin/activate
 ```
 
 
-*NOTE: Your prompt will change after activating a virtual environemnt. This will let you know you did thing correctly, as well as help identify which environment is active.*
+*NOTE: Your prompt will change after activating a virtual environment. This will let you know you did thing correctly, as well as help identify which environment is active.*
 
-# Django Walkthrough
-We are going to create an app that will create some To-Dos. This is a very abbreviated tutorial that is tailored for our example application, and does not cover all of Django at great depth. For that, you should walk though the [official documentation](https://docs.djangoproject.com/en/1.11/) and [tutorial](https://docs.djangoproject.com/en/1.11/intro/tutorial01/).
+# Django Walk-through
+We are going to create an application that will create some To-Dos. This is a very abbreviated tutorial that is tailored for our example application, and does not cover all of Django at great depth. For that, you should walk though the [official documentation](https://docs.djangoproject.com/en/1.11/) and [tutorial](https://docs.djangoproject.com/en/1.11/intro/tutorial01/).
 
 For our application, we need a way to create, view, update, and delete todos. As a stretch goal, we would like the ability to have different people login and be able to work with only the todos that belong to them. 
 
@@ -284,7 +284,7 @@ class Todo(models.Model):
 ### What are we doing?
 We are telling django that we're creating a object called Todo. This model has 3 properties: user, description, and due_date, and they have attributes. For the description, we're telling django that the max length is 128 characters, and there must be a value there to pass validation.
 
-Ok, we've defined our models, but we havent created them in our database yet; lets do that.
+Ok, we've defined our models, but we haven't created them in our database yet; lets do that.
 
 ```python manage.py makemigrations```
 ```python manage.py migrate```
@@ -442,6 +442,51 @@ todo_update_form.html
 {% endblock %}
 ```
 
+todo_form.html
+```
+{% extends 'base.html' %}
+
+{% block body %}
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save" />
+</form>
+{% endblock %}
+```
+
+todo_detail.html
+```
+{% extends 'base.html' %}
+
+{% block body %}
+<a href="{% url 'todo_list'  %}">Back to list</a><br><br>
+
+
+Details <br>
+
+ID: {{object.id}} <br>
+Description - {{ object.description }} <br>
+Due State - {{ object.due_date }}<br>
+
+{% endblock %}
+
+```
+
+todo_confirm_delete.html
+```
+{% extends 'base.html' %}
+
+{% block body %}
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <input type="submit" value="Confirm" />
+</form>
+{% endblock %}
+```
+
+
+
+
 ### Function based views
 
 What if we need more than just CRUD-based views? 
@@ -456,7 +501,7 @@ def index(request):
     return render(request, "todos/index.html",{'todo_count': todo_count})
 ```
 
-and in templates/todos/index.html
+and in templates/todos/index.html (note the new )
 
 ```
 {% extends 'base.html' %}
@@ -474,7 +519,9 @@ Todo Count: {{todo_count}}<br>
 
 Django uses its own templating engine...
 
-Let's create a base.html, which all the other snippets can leverage. For the purposes for the walkthrough we'll call our libraries remotely, and keep the templating basic...
+You may have noticed that the html snippits above mentions things like ```{% extends 'base.html' %} or {% block xxxx %}``` . These tags are telling django's templating to use base.html
+
+Let's create a base.html, which all the other snippets can leverage. For the purposes for the walk through we'll call our libraries remotely, and keep the templating basic...
 
 templates/todos/base.html
 ```
