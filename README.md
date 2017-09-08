@@ -153,7 +153,7 @@ This will create the following structure
 
 Let's include the app we've just built into the project.
 
-edit your myproject/settings.py file to include your new application:
+edit your `myproject/settings.py` file to include your new application:
 ```
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -323,14 +323,11 @@ To run this test, type ```python manage.py test```
 If this test passes, you know that you've created the todo model's fields.
 
 
-###Why Test?
+### Why Test?
 Because code inevitably changes and grows. As you add and modify features, you run tests against all your new and old code to make sure nothing is broken. Always test before pushing things up into higher environments, or into source code control!
 
-###What to Test?
+### What to Test?
 Any custom logic, such as form validations, view redirects, permission-based views, etc.
-
-
-
 
 Ok, so we have a model now and have a basic test against it, how do we interact with it?
 
