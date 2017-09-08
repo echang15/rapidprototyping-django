@@ -475,8 +475,13 @@ Todo Count: {{todo_count}}<br>
 
 
 ## Django Admin
-What if we need an administrative back-end where we can maintain our data, users, etc? Django built=in Admin app gives this all to us for free!
+What if we need an administrative back-end where we can maintain our data, users, etc? Django built-in Admin app gives this all to us for free!
 
+### Caveats
+While the Admin app itself is great, you're limited to what the look and feel of the app is, as well as how far you can extend it. If you're running the limitation of admin, and fighting on the ways it wants you to do things, it's probably time to just abandon it and create your own app and write the logic/views/forms the way you need it.
+
+
+### Adding Models into Admin
 First, we need to create an admin user
 ``` python manage.py createsuperuser ```
 
