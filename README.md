@@ -105,7 +105,7 @@ You will need the **django** package at a bare minimum, so lets install that int
 ## Building a project skeleton
 Lets create your first project:
 
-```django-admin startproject todo```
+```django-admin startproject myproject```
 
 ```
  ───myproject
