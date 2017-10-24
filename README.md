@@ -169,7 +169,7 @@ INSTALLED_APPS = [
 
 Add the following lines of code to the bottom of the ```settings.py``` file. These settings are implementing some extra security and overwrite some default settings to work with some of the code below. Check the Django documentation if you want to learn more about what these settings do.
 
-```
+```python
 # Login redirection settings
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = LOGIN_REDIRECT_URL
@@ -186,13 +186,13 @@ Let's work from the user up and start with creating an HTML template we want to 
 
 Before we create the html templates we have to create the directory structure where Django expects to find them. From the *todos* folder above to the following:
 
-```
+```bash
 mkdir -p todos/templates/todos/
 touch todos/templates/todos/index.html
 ```
 
 Then create the following html file:  todos/templates/todos/index.html
-```
+```html
 <html>
     <head></head>
     <body>This is the home page</body>
@@ -223,11 +223,9 @@ Your app folder should now look like this:
 Now that we have the html template we want the users to see, let's your create first view that will use that template.
 
 **todos/views.py**
-```
+```python
 from django.shortcuts import render
 from django.http import HttpResponse
-# Create your views here.
-
 
 def index(request):
     return render(request, "todos/index.html")
@@ -241,7 +239,7 @@ To make things more manageable, let's separate application level urls from proje
 Create a new file `urls.py` in your todos directory
 
 **todos/urls.py**
-```
+```python
 from django.conf.urls import url
 from . import views
 
@@ -253,7 +251,7 @@ urlpatterns = [
 Now we need to tell the project's URL's file to look for the todo app's specific urls...
 
 **myproject/urls.py**
-```
+```python
 from django.conf.urls import include,url
 from django.contrib import admin
 
@@ -282,7 +280,7 @@ Defining your models
 A model is the single, definitive source of truth about your data. It contains the essential fields and behaviors of the data you're storing. Each model is a Python class that subclasses `django.db.models.Model`. Each attribute of the model represents a database field. With all of this, Django gives you an automatically-generated database-access API; see https://docs.djangoproject.com/en/1.11/topics/db/queries/
 
 In the `/todos/models.py` file, lets define our models.
-```
+```python
 from django.db import models
 # Leverage Django's built-in User models
 from django.contrib.auth.models import User
@@ -303,7 +301,7 @@ We are telling django that we're creating a object called Todo. This model has 3
 
 Ok, we've defined our models, but we haven't created them in our database yet; lets do that.
 
-```
+```bash
 python manage.py makemigrations todos
 python manage.py migrate
 ```
@@ -319,7 +317,7 @@ the migration scripts can be copied across to other environments, so we can appl
 Lets start our first test. 
 
 **todos/tests.py**
-```
+```python
 from django.test import TestCase
 from django.test.client import Client
 
@@ -372,7 +370,7 @@ A view is simply a callable which takes a request and returns a response. This c
 
 So in our views.py, instead of hand crafting CRUD functions we can leverage the generic class based views to do the same thing in a very small amount of code:
 
-```
+```python
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.urls import reverse_lazy
@@ -423,7 +421,7 @@ class todo_delete(DeleteView):
 ```
 
 We'll also need to update our urls.py to link to these:
-```
+```python
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^todos/$', views.todo_list.as_view(), name='todo_list'),
@@ -447,7 +445,7 @@ Let's create this ```base.html```, which all the other snippets will leverage. F
 
 
 **base.html**
-```
+```html
 <!DOCTYPE html>
 <html>
     <head>
@@ -500,7 +498,7 @@ Let's create this ```base.html```, which all the other snippets will leverage. F
 
 
 **todo_list.html**
-```
+```html
 {% extends 'base.html' %}
 
 {% block body %}
@@ -532,7 +530,7 @@ Let's create this ```base.html```, which all the other snippets will leverage. F
 ```
 
 **todo_update_form.html**
-```
+```html
 {% extends 'base.html' %}
 
 {% block body %}
@@ -544,7 +542,7 @@ Let's create this ```base.html```, which all the other snippets will leverage. F
 ```
 
 **todo_form.html**
-```
+```html
 {% extends 'base.html' %}
 
 {% block body %}
@@ -556,7 +554,7 @@ Let's create this ```base.html```, which all the other snippets will leverage. F
 ```
 
 **todo_detail.html**
-```
+```html
 {% extends 'base.html' %}
 
 {% block body %}
@@ -574,7 +572,7 @@ Due State - {{ object.due_date }}<br>
 ```
 
 **todo_confirm_delete.html**
-```
+```html
 {% extends 'base.html' %}
 
 {% block body %}
@@ -595,14 +593,14 @@ Let's add a count of all Todos to our index view and page.
 
 
 **views.py**
-```
+```python
 def index(request):
     todo_count = Todo.objects.all().count()
     return render(request, "todos/index.html",{'todo_count': todo_count})
 ```
 
 **todos/templates/todos/index.html**
-```
+```html
 {% extends 'base.html' %}
 
 {% block body %}
