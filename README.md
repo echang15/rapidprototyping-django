@@ -172,7 +172,10 @@ Let's work from the user up and start with creating an HTML template we want to 
 
 Before we create the html templates we have to create the directory structure where Django expects to find them. From the *todos* folder above to the following:
 
-```mkdir -p todos/templates/todos/```
+```
+mkdir -p todos/templates/todos/
+touch todos/templates/todos/index.html
+```
 
 Then create the following html file:  todos/templates/todos/index.html
 ```
@@ -272,7 +275,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Todo(models.Model):
-    user =  models.ForeignKey(User, unique=True)
+    user =  models.ForeignKey(User, null=True, blank=True)
     description = models.CharField(max_length=128, null=False, blank=False)
     due_date = models.DateField(null=True, blank=True)
 
