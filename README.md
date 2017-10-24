@@ -167,6 +167,20 @@ INSTALLED_APPS = [
 ```
 
 
+Add the following lines of code to the bottom of the ```settings.py``` file. These settings are implementing some extra security and overwrite some default settings to work with some of the code below. Check the Django documentation if you want to learn more about what these settings do.
+
+```
+# Login redirection settings
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = LOGIN_REDIRECT_URL
+
+# Security Settings
+CSRF_COOKIE_HTTPONLY = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+```
+
+
 ## Templates
 Let's work from the user up and start with creating an HTML template we want to display when people first visit our app. We will refer to this as the *home* or *index* template.
 
@@ -420,8 +434,70 @@ urlpatterns = [
 ]
 
 ```
+
+
+## Templates
+
 Finally,
-we'll need to create the HTML template files that the views are looking for. Do to this, we'll need place the files in /myproject/templates/todos
+we'll need to create the HTML template files that the views are looking for. Do to this, we'll need place the files in ```todos/templates/todos```
+
+You may notice that the html snippits below mentions things like ```{% extends 'base.html' %} or {% block xxxx %}``` . These template-tags are part of Django's built in templating language. The ```extends``` tag allows us to do template inheritance... telling django to use base.html as the foundational template and allow us to add content to it.
+
+Let's create this ```base.html```, which all the other snippets will leverage. For the purposes for the walk through we'll call our css/js libraries remotely, and keep the templating basic.
+
+
+base.html
+```
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>To Do</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Bootstrap core CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+                {% if request.user.username %}
+                    <a class="navbar-brand" href="/accounts/logout/">Logout: {{ request.user.username }}</a>
+                {% else %}
+                    <a class="navbar-brand" href="/accounts/login/">Login</a>
+                    <a class="navbar-brand" href="/accounts/register/">Register</a>
+                {% endif %}
+            </div>
+          </div>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div> <!-- /container-fluid -->
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    </body>
+</html>
+
+```
+
 
 todo_list.html
 ```
@@ -484,7 +560,7 @@ todo_detail.html
 {% extends 'base.html' %}
 
 {% block body %}
-<a href="{% url 'todo_list'  %}">Back to list</a><br><br>
+<a href="{% url 'todo_list' %}">Back to list</a><br><br>
 
 
 Details <br>
@@ -508,7 +584,6 @@ todo_confirm_delete.html
 </form>
 {% endblock %}
 ```
-
 
 
 
@@ -539,66 +614,6 @@ Todo Count: {{todo_count}}<br>
 {% endblock %}
 ```
 
-
-## Templates
-
-Django uses its own templating engine...
-
-You may have noticed that the html snippits above mentions things like ```{% extends 'base.html' %} or {% block xxxx %}``` . These tags are telling django's templating to use base.html
-
-Let's create a base.html, which all the other snippets can leverage. For the purposes for the walk through we'll call our libraries remotely, and keep the templating basic...
-
-templates/todos/base.html
-```
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>To Do</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <!-- Bootstrap core CSS -->
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
-        <![endif]-->
-    </head>
-
-    <body>
-
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <div class="navbar-header">
-                {% if request.user.username %}
-                    <a class="navbar-brand" href="/accounts/logout/">Logout: {{ request.user.username }}</a>
-                {% else %}
-                    <a class="navbar-brand" href="/accounts/login/">Login</a>
-                    <a class="navbar-brand" href="/accounts/register/">Register</a>
-                {% endif %}
-            </div>
-          </div>
-        </nav>
-
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12">
-                    {% block body %}{% endblock %}
-                </div>
-            </div>
-        </div> <!-- /container-fluid -->
-
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-    </body>
-</html>
-
-```
 
 
 ## Django Admin
