@@ -172,9 +172,9 @@ Let's work from the user up and start with creating an HTML template we want to 
 
 Before we create the html templates we have to create the directory structure where Django expects to find them. From the *todos* folder above to the following:
 
-```mkdir -p templates/todos/```
+```mkdir -p todos/templates/todos/```
 
-Then create the following html file:  templates/todos/index.html
+Then create the following html file:  todos/templates/todos/index.html
 ```
 <html>
     <head></head>
