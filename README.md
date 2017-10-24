@@ -286,8 +286,10 @@ We are telling django that we're creating a object called Todo. This model has 3
 
 Ok, we've defined our models, but we haven't created them in our database yet; lets do that.
 
-```python manage.py makemigrations```
-```python manage.py migrate```
+```
+python manage.py makemigrations todos
+python manage.py migrate
+```
 
 Ok, what did we just do? We just told django to create a migration script that will analyze the current state of the DB, and script out the changes that need to happen in order to sync it with the current definition. Then, we executed the changes.
 
@@ -354,6 +356,18 @@ A view is simply a callable which takes a request and returns a response. This c
 So in our views.py, instead of hand crafting CRUD functions we can leverage the generic class based views to do the same thing in a very small amount of code:
 
 ```
+from django.shortcuts import render
+from django.core.urlresolvers import reverse
+from django.urls import reverse_lazy
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+from todos.models import Todo
+
+
 class todo_list(ListView):
     ''' This will display a list of all the todos '''
     model = Todo
@@ -363,7 +377,8 @@ class todo_details(DetailView):
     ''' This will display a page with the details of a single todo '''
     model = Todo
 
-
+# Require login for this view
+@method_decorator(login_required, name='dispatch')
 class todo_create(CreateView):
     ''' This will display a simple form and allow users to create a todo '''
     model = Todo
@@ -372,7 +387,8 @@ class todo_create(CreateView):
     def get_success_url(self):
         return reverse('todo_details', kwargs={'pk': self.object.pk})
 
-
+# Require login for this view
+@method_decorator(login_required, name='dispatch')
 class todo_update(UpdateView):
     ''' update a todo, then redirect back to its details page '''
     model = Todo
@@ -381,7 +397,8 @@ class todo_update(UpdateView):
     def get_success_url(self):
         return reverse('todo_details', kwargs={'pk': self.object.pk})
 
-
+# Require login for this view
+@method_decorator(login_required, name='dispatch')
 class todo_delete(DeleteView):
     ''' Delete a specific todo (with confirmation page), and redirect back to list view '''
     model = Todo
@@ -390,7 +407,7 @@ class todo_delete(DeleteView):
 
 We'll also need to update our urls.py to link to these:
 ```
-    urlpatterns = [
+urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^todos/$', views.todo_list.as_view(), name='todo_list'),
     url(r'^todo/create/$', views.todo_create.as_view(), name='todo_create'),
@@ -409,22 +426,27 @@ todo_list.html
 
 {% block body %}
 <a href="{% url 'todo_create' %}">Create a new Todo</a>
-
 <br><br>
-{%  for obj in object_list %}
-
------- <br />
-ID : <a href="{% url 'todo_details' obj.id %}">{{ obj.id }}</a> <br />
-Description : {{ obj.description }} <br />
-Due State : {{ obj.due_date }} <br />
-
-<a href="{% url 'todo_update' obj.id %}">Update</a> <a href="{% url 'todo_delete' obj.id %}">Delete</a> <br>
-
-
-{% endfor %}
 
 {% if not object_list %}
-You don't have any todo's. Click the link above to make one
+<p>You don't have any todo's. Click the link above to make one</p>
+{% else %}
+<ul class="list-group">
+    {%  for obj in object_list %}
+    <li class="list-group-item">
+        <a href="{% url 'todo_update' obj.id %}">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+        </a>
+        &nbsp;
+        <a href="{% url 'todo_delete' obj.id %}">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </a>
+        &nbsp;
+        <a href="{% url 'todo_details' obj.id %}">{{ obj.description }}</a>
+        <span class="badge">{{ obj.due_date }}</span>
+    </li>
+    {% endfor %}
+</ul>
 {% endif %}
 
 {% endblock %}
@@ -551,6 +573,7 @@ templates/todos/base.html
                     <a class="navbar-brand" href="/accounts/logout/">Logout: {{ request.user.username }}</a>
                 {% else %}
                     <a class="navbar-brand" href="/accounts/login/">Login</a>
+                    <a class="navbar-brand" href="/accounts/register/">Register</a>
                 {% endif %}
             </div>
           </div>
