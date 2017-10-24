@@ -39,7 +39,7 @@ On Windows:
 In the case you don't have pip or setuptools installed, the manual installation instructions are found here: https://pip.pypa.io/en/stable/installing/
 
 **tl;dr**
-```
+```bash
 $ curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
 $ python get-pip.py
 ```
@@ -51,7 +51,7 @@ Python “Virtual Environments” allow Python packages to be installed in an is
 
 Docs: https://docs.python.org/3/library/venv.html
 
-```
+```bash
 python3 -m venv <DIR>
 source <DIR>/bin/activate
 ```
@@ -60,7 +60,7 @@ source <DIR>/bin/activate
 
 Docs: https://virtualenv.pypa.io/en/stable/
 
-```
+```bash
 pip install virtualenv
 virtualenv <DIR>
 source <DIR>/bin/activate
