@@ -77,18 +77,18 @@ For our application, we need a way to create, view, update, and delete todos. As
 ## Ready your environment
 ### Create a django virtual environment
 This assumes you are using Python 2.7+ and the **virtualenv** tool. For Python 3.4+, please see above instructions for **venv**.
-```
+```bash
 virtualenv /path/to/my/environments/django-env
 ```
 
 On Linux/macOS:
-```
+```bash
 virtualenv /path/to/my/environments/django-env
 source /path/to/my/environments/django-env/bin/activate
 ```
 
 On Windows:
-```
+```bash
 virtualenv c:\path\to\my\environments\django-env
 c:\path\to\my\environments\django-env\Scripts\activate.bat
 ```
@@ -97,7 +97,7 @@ c:\path\to\my\environments\django-env\Scripts\activate.bat
 ## Install your dependencies
 You will need the **django** package at a bare minimum, so lets install that into our virtual environment. We will install other packages later as necessary.
 
-```
+```bash
 (django-env)$ pip install django
 ```
 
@@ -154,7 +154,7 @@ This will create the following structure
 Let's include the app we've just built into the project.
 
 edit your `myproject/settings.py` file to include your new application:
-```
+```python
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -627,7 +627,7 @@ First, we need to create an admin user
 ``` python manage.py createsuperuser ```
 
 **todos/admin.py**
-```
+```python
 from django.contrib import admin
 
 # Register your models here.
