@@ -222,7 +222,7 @@ Your app folder should now look like this:
 ## Views
 Now that we have the html template we want the users to see, let's your create first view that will use that template.
 
-todos/views.py
+**todos/views.py**
 ```
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -240,7 +240,7 @@ To make things more manageable, let's separate application level urls from proje
 
 Create a new file `urls.py` in your todos directory
 
-todos/urls.py
+**todos/urls.py**
 ```
 from django.conf.urls import url
 from . import views
@@ -252,7 +252,7 @@ urlpatterns = [
 
 Now we need to tell the project's URL's file to look for the todo app's specific urls...
 
-myproject/urls.py
+**myproject/urls.py**
 ```
 from django.conf.urls import include,url
 from django.contrib import admin
@@ -318,7 +318,7 @@ the migration scripts can be copied across to other environments, so we can appl
 
 Lets start our first test. 
 
-todos/tests.py
+**todos/tests.py**
 ```
 from django.test import TestCase
 from django.test.client import Client
@@ -446,7 +446,7 @@ You may notice that the html snippits below mentions things like ```{% extends '
 Let's create this ```base.html```, which all the other snippets will leverage. For the purposes for the walk through we'll call our css/js libraries remotely, and keep the templating basic.
 
 
-base.html
+**base.html**
 ```
 <!DOCTYPE html>
 <html>
@@ -499,7 +499,7 @@ base.html
 ```
 
 
-todo_list.html
+**todo_list.html**
 ```
 {% extends 'base.html' %}
 
@@ -531,7 +531,7 @@ todo_list.html
 {% endblock %}
 ```
 
-todo_update_form.html
+**todo_update_form.html**
 ```
 {% extends 'base.html' %}
 
@@ -543,7 +543,7 @@ todo_update_form.html
 {% endblock %}
 ```
 
-todo_form.html
+**todo_form.html**
 ```
 {% extends 'base.html' %}
 
@@ -555,7 +555,7 @@ todo_form.html
 {% endblock %}
 ```
 
-todo_detail.html
+**todo_detail.html**
 ```
 {% extends 'base.html' %}
 
@@ -573,7 +573,7 @@ Due State - {{ object.due_date }}<br>
 
 ```
 
-todo_confirm_delete.html
+**todo_confirm_delete.html**
 ```
 {% extends 'base.html' %}
 
@@ -594,15 +594,14 @@ What if we need more than just CRUD-based views?
 Let's add a count of all Todos to our index view and page.
 
 
-views.py
+**views.py**
 ```
 def index(request):
     todo_count = Todo.objects.all().count()
     return render(request, "todos/index.html",{'todo_count': todo_count})
 ```
 
-and in templates/todos/index.html (note the new )
-
+**todos/templates/todos/index.html**
 ```
 {% extends 'base.html' %}
 
@@ -627,7 +626,7 @@ While the Admin app itself is great, you're limited to what the look and feel of
 First, we need to create an admin user
 ``` python manage.py createsuperuser ```
 
-in todos/admin.py
+**todos/admin.py**
 ```
 from django.contrib import admin
 
