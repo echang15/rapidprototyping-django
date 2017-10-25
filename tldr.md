@@ -120,13 +120,18 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.db.models import Count
 
+from django.contrib.auth.models import User
 from todos.models import Todo
 
 
 def index(request):
-    todo_count = Todo.objects.all().count()
-    return render(request, "todos/index.html",{'todo_count': todo_count})
+    todos_by_user = User.objects.annotate(num_todos=Count('todo'))
+    context = {
+        'todos_by_user': todos_by_user
+    }
+    return render(request, "todos/index.html", context)
 
 
 class todo_list(ListView):
@@ -148,6 +153,7 @@ class todo_create(CreateView):
 
 ```bash
 mkdir -p todos/templates/todos/
+mkdir -p todos/templates/registration/
 ```
 
 **todos/templates/base.html**
@@ -173,16 +179,31 @@ mkdir -p todos/templates/todos/
     <body>
 
         <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <div class="navbar-header">
-                {% if request.user.username %}
-                    <a class="navbar-brand" href="/accounts/logout/">Logout: {{ request.user.username }}</a>
-                {% else %}
-                    <a class="navbar-brand" href="/accounts/login/">Login</a>
-                    <a class="navbar-brand" href="/accounts/register/">Register</a>
-                {% endif %}
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">Home</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            {% if request.user.username %}
+                                <a href="/accounts/logout/">Logout: {{ request.user.username }}</a>
+                            {% else %}
+                                <a href="/accounts/login/">Login</a>
+                            {% endif %}
+                        </li>
+                        <li>
+                            <a href="/accounts/register/">Register</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-          </div>
         </nav>
 
         <div class="container-fluid">
@@ -236,7 +257,15 @@ mkdir -p todos/templates/todos/
 
 {% block body %}
 
-Todo Count: {{todo_count}}<br>
+Todo Count by User:<br>
+<ul class="list-group">
+    {%  for obj in todos_by_user %}
+    <li class="list-group-item">
+        {{ obj.username }}
+        <span class="badge">{{ obj.num_todos }}</span>
+    </li>
+    {% endfor %}
+</ul>
 <a href="{% url 'todo_list' %}">List all todos</a>
 
 {% endblock %}
@@ -257,15 +286,7 @@ Todo Count: {{todo_count}}<br>
 <ul class="list-group">
     {%  for obj in object_list %}
     <li class="list-group-item">
-        <a href="{% url 'todo_update' obj.id %}">
-            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-        </a>
-        &nbsp;
-        <a href="{% url 'todo_delete' obj.id %}">
-            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-        </a>
-        &nbsp;
-        <a href="{% url 'todo_details' obj.id %}">{{ obj.description }}</a>
+        {{ obj.description }}
         <span class="badge">{{ obj.due_date }}</span>
     </li>
     {% endfor %}

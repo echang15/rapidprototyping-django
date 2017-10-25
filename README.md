@@ -476,18 +476,33 @@ Let's create this ```base.html```, which all the other snippets will leverage. F
 
     <body>
 
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
             <div class="navbar-header">
-                {% if request.user.username %}
-                    <a class="navbar-brand" href="/accounts/logout/">Logout: {{ request.user.username }}</a>
-                {% else %}
-                    <a class="navbar-brand" href="/accounts/login/">Login</a>
-                    <a class="navbar-brand" href="/accounts/register/">Register</a>
-                {% endif %}
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">ToDos</a>
             </div>
-          </div>
-        </nav>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        {% if request.user.username %}
+                            <a href="/accounts/logout/">Logout: {{ request.user.username }}</a>
+                        {% else %}
+                            <a href="/accounts/login/">Login</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        <a href="/accounts/register/">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
         <div class="container-fluid">
             <div class="row">
@@ -504,6 +519,7 @@ Let's create this ```base.html```, which all the other snippets will leverage. F
 
     </body>
 </html>
+
 
 ```
 
@@ -606,8 +622,13 @@ Let's add a count of all Todos to our index view and page.
 **views.py**
 ```python
 def index(request):
-    todo_count = Todo.objects.all().count()
-    return render(request, "todos/index.html",{'todo_count': todo_count})
+    all_todos = Todo.objects.all()
+    todo_count = all_todos.count()
+    context = {
+        'todo_count': todo_count, 
+        'todos': all_todos
+    }
+    return render(request, "todos/index.html", context)
 ```
 
 **todos/templates/todos/index.html**
