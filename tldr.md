@@ -2,6 +2,7 @@
 
 ```bash
 django-admin startproject myproject
+cd myproject
 python manage.py startapp todos
 ```
 
@@ -77,6 +78,9 @@ curl http://localhost:8000/admin
 **todos/urls.py**
 
 ```python
+from django.conf.urls import url
+from . import views
+
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^todos/$', views.todo_list.as_view(), name='todo_list'),
@@ -87,10 +91,21 @@ urlpatterns = [
 **myproject/urls.py**
 
 ```python
-from django.conf.urls import include,url
+from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.auth.views import LoginView, LogoutView
+from django.views.generic.edit import CreateView
+from django.contrib.auth.forms import UserCreationForm
+
 
 urlpatterns = [
+    url(r'^accounts/login/', LoginView.as_view(), name="user_login"),
+    url(r'^accounts/logout/', LogoutView.as_view(), name="user_logout"),
+    url(r'^accounts/register/', CreateView.as_view(
+            template_name='registration/register.html',
+            form_class=UserCreationForm,
+            success_url='/'
+    )),
     url(r'^admin/', admin.site.urls),
     url(r'^', include('todos.urls')),
 ]
@@ -135,7 +150,7 @@ class todo_create(CreateView):
 mkdir -p todos/templates/todos/
 ```
 
-**todos/templates/todos/base.html**
+**todos/templates/base.html**
 
 ```html
 <!DOCTYPE html>
@@ -186,6 +201,32 @@ mkdir -p todos/templates/todos/
     </body>
 </html>
 
+```
+
+**todos/templates/registration/login.html**
+
+```html
+{% extends 'base.html' %}
+
+{% block body %}
+<form action="" method="post">{% csrf_token %}
+{{form}}
+<input type="submit" value="Confirm" />
+</form>
+{% endblock %}
+```
+
+**todos/templates/registration/register.html**
+
+```html
+{% extends 'base.html' %}
+
+{% block body %}
+<form action="" method="post">{% csrf_token %}
+{{form}}
+<input type="submit" value="Confirm" />
+</form>
+{% endblock %}
 ```
 
 **todos/templates/todos/index.html**
