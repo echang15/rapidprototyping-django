@@ -455,7 +455,7 @@ You may notice that the html snippits below mentions things like ```{% extends '
 Let's create this ```base.html```, which all the other snippets will leverage. For the purposes for the walk through we'll call our css/js libraries remotely, and keep the templating basic.
 
 
-**base.html**
+**todos/templates/base.html**
 ```html
 <!DOCTYPE html>
 <html>
@@ -524,7 +524,7 @@ Let's create this ```base.html```, which all the other snippets will leverage. F
 ```
 
 
-**todo_list.html**
+**todos/templates/todos/todo_list.html**
 ```html
 {% extends 'base.html' %}
 
@@ -556,7 +556,7 @@ Let's create this ```base.html```, which all the other snippets will leverage. F
 {% endblock %}
 ```
 
-**todo_update_form.html**
+**todos/templates/todos/todo_update_form.html**
 ```html
 {% extends 'base.html' %}
 
@@ -568,7 +568,7 @@ Let's create this ```base.html```, which all the other snippets will leverage. F
 {% endblock %}
 ```
 
-**todo_form.html**
+**todos/templates/todos/todo_form.html**
 ```html
 {% extends 'base.html' %}
 
@@ -580,7 +580,7 @@ Let's create this ```base.html```, which all the other snippets will leverage. F
 {% endblock %}
 ```
 
-**todo_detail.html**
+**todos/templates/todos/todo_detail.html**
 ```html
 {% extends 'base.html' %}
 
@@ -598,7 +598,7 @@ Due State - {{ object.due_date }}<br>
 
 ```
 
-**todo_confirm_delete.html**
+**todos/templates/todos/todo_confirm_delete.html**
 ```html
 {% extends 'base.html' %}
 
