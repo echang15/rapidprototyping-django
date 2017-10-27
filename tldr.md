@@ -1,5 +1,9 @@
 # Rapid Prototyping with Django (tl;dr)
 
+Looking for a more complete walkthrough? [Look here](README.md)
+
+## Getting started
+
 ```bash
 django-admin startproject myproject
 cd myproject
