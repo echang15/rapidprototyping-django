@@ -1,5 +1,4 @@
-# CrashCourse-Django
-Rapid Prototyping with Django
+# Rapid Prototyping with Django
 
 ## Overview
 
