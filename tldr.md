@@ -71,8 +71,8 @@ admin.site.register(Todo)
 
 
 ```bash
-python manage runserver
-curl http://localhost:8000/admin
+python manage.py runserver
+open htpp://127.0.0.1:8000
 ```
 
 **todos/urls.py**
