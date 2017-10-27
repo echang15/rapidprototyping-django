@@ -1,5 +1,7 @@
 # Rapid Prototyping with Django
 
+Looking for a super short primer? [Look here](tldr.md)
+
 ## Overview
 
 You will create your first Python/Django app, with basic CRUD (Create, Read, Update, Delete) functionality. We will do this by building a simple "To-do" application modeled after [todo-MVC](http://todomvc.com/)
