@@ -58,7 +58,6 @@ class Todo(models.Model):
 ```bash
 python manage.py makemigrations todos
 python manage.py migrate
-python manage.py createsuperuser
 ```
 
 **todos/admin.py**
@@ -75,6 +74,7 @@ admin.site.register(Todo)
 
 
 ```bash
+python manage.py createsuperuser
 python manage.py runserver
 open htpp://127.0.0.1:8000
 ```
