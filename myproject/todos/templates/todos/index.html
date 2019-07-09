@@ -2,7 +2,17 @@
 
 {% block body %}
 
-Todo Count: {{todo_count}}<br>
+<br>
+<h3>Todo count by user:</h3>
+<ul class="list-group">
+    {%  for obj in todos_by_user %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ obj.username }}
+        <span class="badge badge-primary badge-pill">{{ obj.num_todos }}</span>
+    </li>
+    {% endfor %}
+</ul>
+<br>
 <a href="{% url 'todo_list' %}">List all todos</a>
 
 {% endblock %}
