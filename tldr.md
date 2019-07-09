@@ -95,23 +95,23 @@ urlpatterns = [
 **myproject/urls.py**
 
 ```python
-from django.conf.urls import include, url
 from django.contrib import admin
+from django.urls import include, path
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 
 
 urlpatterns = [
-    url(r'^accounts/login/', LoginView.as_view(), name="user_login"),
-    url(r'^accounts/logout/', LogoutView.as_view(), name="user_logout"),
-    url(r'^accounts/register/', CreateView.as_view(
+    path('accounts/login/', LoginView.as_view(), name="user_login"),
+    path('accounts/logout/', LogoutView.as_view(), name="user_logout"),
+    path('accounts/register/', CreateView.as_view(
             template_name='registration/register.html',
             form_class=UserCreationForm,
             success_url='/'
     )),
-    url(r'^admin/', admin.site.urls),
-    url(r'^', include('todos.urls')),
+    path('admin/', admin.site.urls),
+    path('', include('todos.urls')),
 ]
 ```
 
@@ -119,7 +119,7 @@ urlpatterns = [
 
 ```python
 from django.shortcuts import render
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
@@ -158,6 +158,13 @@ class todo_create(CreateView):
 ```bash
 mkdir -p todos/templates/todos/
 mkdir -p todos/templates/registration/
+mkdir -p todos/templates/todos
+touch todos/templates/base.html
+touch todos/templates/registration/login.html
+touch todos/templates/registration/register.html
+touch todos/templates/todos/index.html
+touch todos/templates/todos/todo_list.html
+touch todos/templates/todos/todo_form.html
 ```
 
 **todos/templates/base.html**
