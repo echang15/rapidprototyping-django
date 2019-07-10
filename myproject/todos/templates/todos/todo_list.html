@@ -1,20 +1,36 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<a href="{% url 'todo_create' %}">Create a new Todo</a>
-<br><br>
 
 {% if not object_list %}
 <p>You don't have any todo's. Click the link above to make one</p>
 {% else %}
-<ul class="list-group">
-    {%  for obj in object_list %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        {{ obj.description }}
-        <span class="badge">{{ obj.due_date }}</span>
-    </li>
-    {% endfor %}
-</ul>
+<form class="form-inline">
+    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+    <button class="btn btn-secondary my-sm-0" type="submit">Search</button>
+</form>
+<br>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">For</th>
+                <th scope="col">Description</th>
+                <th scope="col">Due</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%  for obj in object_list %}
+            <tr>
+                <th scope="row">{{ obj.user.username }}</th>
+                <td>{{ obj.description }}</td>
+                <td>{{ obj.due_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endif %}
-
+<br>
+<a class="btn btn-primary" href="{% url 'todo_create' %}">New Todo</a>
 {% endblock %}

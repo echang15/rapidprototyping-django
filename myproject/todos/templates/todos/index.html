@@ -2,7 +2,6 @@
 
 {% block body %}
 
-<br>
 <h3>Todo count by user:</h3>
 <ul class="list-group">
     {%  for obj in todos_by_user %}
@@ -13,6 +12,6 @@
     {% endfor %}
 </ul>
 <br>
-<a href="{% url 'todo_list' %}">List all todos</a>
+<a class="btn btn-primary" href="{% url 'todo_list' %}">List all Todos</a>
 
 {% endblock %}
