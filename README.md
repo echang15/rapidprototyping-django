@@ -71,7 +71,7 @@ source <DIR>/bin/activate
 *NOTE: Your prompt will change after activating a virtual environment. This will let you know you did thing correctly, as well as help identify which environment is active.*
 
 # Django Walk-through
-We are going to create an application that will create some To-Dos. This is a very abbreviated tutorial that is tailored for our example application, and does not cover all of Django at great depth. For that, you should walk though the [official documentation](https://docs.djangoproject.com/en/1.11/) and [tutorial](https://docs.djangoproject.com/en/1.11/intro/tutorial01/).
+We are going to create an application that will create some To-Dos. This is a very abbreviated tutorial that is tailored for our example application, and does not cover all of Django at great depth. For that, you should walk though the [official documentation](https://docs.djangoproject.com/en/2.2/) and [tutorial](https://docs.djangoproject.com/en/2.2/intro/tutorial01/).
 
 For our application, we need a way to create, view, update, and delete todos. As a stretch goal, we would like the ability to have different people login and be able to work with only the todos that belong to them. 
 
@@ -120,19 +120,19 @@ Lets create your first project:
 ```
 
 
-From the Django Tutorial (https://docs.djangoproject.com/en/1.11/intro/tutorial01/):
-- The outer myproject/ root directory is just a container for your project. Its name doesn’t matter to Django; you can rename it to anything you like.
-- manage.py: A command-line utility that lets you interact with this Django project in various ways.
-- The inner myproject/ directory is the actual Python package for your project. Its name is the Python package name you’ll need to use to import anything inside it (e.g. myproject.urls).
-- myproject/__init__.py: An empty file that tells Python that this directory should be considered a Python package. If you’re a Python beginner, read more about packages in the official Python docs.
-- myproject/settings.py: Settings/configuration for this Django project. Django settings will tell you all about how settings work.
-- myproject/urls.py: The URL declarations for this Django project; a “table of contents” of your Django-powered site. You can read more about URLs in URL dispatcher.
-- myproject/wsgi.py: An entry-point for WSGI-compatible web servers to serve your project. See How to deploy with WSGI for more details.
+From the Django Tutorial (https://docs.djangoproject.com/en/2.2/intro/tutorial01/):
+- The outer `myproject/` root directory is just a container for your project. Its name doesn’t matter to Django; you can rename it to anything you like.
+- `manage.py`: A command-line utility that lets you interact with this Django project in various ways.
+- The inner `myproject/` directory is the actual Python package for your project. Its name is the Python package name you’ll need to use to import anything inside it (e.g. myproject.urls).
+- `myproject/__init__.py`: An empty file that tells Python that this directory should be considered a Python package. If you’re a Python beginner, read more about packages in the official Python docs.
+- `myproject/settings.py`: Settings/configuration for this Django project. Django settings will tell you all about how settings work.
+- `myproject/urls.py`: The URL declarations for this Django project; a “table of contents” of your Django-powered site. You can read more about URLs in URL dispatcher.
+- `myproject/wsgi.py`: An entry-point for WSGI-compatible web servers to serve your project. See How to deploy with WSGI for more details.
 
 Ok, now we've created our Project Skeleton. Next, let's create our first application within the project
 
 ## Building your app skeleton
-In the new /myproject/ directory, we'll tell django to create a new application.
+In the new `/myproject/` directory, we'll tell django to create a new application.
 
 ```python manage.py startapp todos```
 
@@ -275,7 +275,7 @@ urlpatterns = [
 ```
 
 ### Checking to see if everything works
-Now that we've created our first views (views.py), hooked it into our router (urls.py), and template (index.html), lets try running our app.
+Now that we've created our first views (`views.py`), hooked it into our router (`urls.py`), and template (`index.html`), lets try running our app.
 
 ```python manage.py runserver```
 
@@ -289,7 +289,7 @@ You should see your rendered index.html file.
 
 Defining your models
 
-A model is the single, definitive source of truth about your data. It contains the essential fields and behaviors of the data you're storing. Each model is a Python class that subclasses `django.db.models.Model`. Each attribute of the model represents a database field. With all of this, Django gives you an automatically-generated database-access API; see https://docs.djangoproject.com/en/1.11/topics/db/queries/
+A model is the single, definitive source of truth about your data. It contains the essential fields and behaviors of the data you're storing. Each model is a Python class that subclasses `django.db.models.Model`. Each attribute of the model represents a database field. With all of this, Django gives you an automatically-generated database-access API; see https://docs.djangoproject.com/en/2.2/topics/db/queries/
 
 In the `/todos/models.py` file, lets define our models.
 ```python
@@ -299,7 +299,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Todo(models.Model):
-    user =  models.ForeignKey(User, null=True, blank=True)
+    user =  models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     description = models.CharField(max_length=128, null=False, blank=False)
     due_date = models.DateField(null=True, blank=True)
 
@@ -335,7 +335,6 @@ from django.test.client import Client
 
 from .models import Todo
 
-
 class TodoTests(TestCase):
 
     def setUp(self):
@@ -363,14 +362,14 @@ Ok, so we have a model now and have a basic test against it, how do we interact 
 
 ## Forms
 ### What is a Form?
-From https://docs.djangoproject.com/en/1.11/topics/forms/ :
+From https://docs.djangoproject.com/en/2.2/topics/forms/ :
 "In HTML, a form is a collection of elements inside <form>...</form> that allow a visitor to do things like enter text, select options, manipulate objects or controls, and so on, and then send that information back to the server." Django handles three distinct parts of the work involved in forms:
 
 - preparing and restructuring data to make it ready for rendering
 - creating HTML forms for the data
 - receiving and processing submitted forms and data from the client
 
-While there are ways to customize and extend forms to suit your own need, we won't cover that today. We will use Django's ModelForms, which is free and built-in. (https://docs.djangoproject.com/en/1.11/topics/forms/modelforms/)
+While there are ways to customize and extend forms to suit your own need, we won't cover that today. We will use Django's ModelForms, which is free and built-in. (https://docs.djangoproject.com/en/2.2/topics/forms/modelforms/)
 
 
 
@@ -378,9 +377,9 @@ While there are ways to customize and extend forms to suit your own need, we won
 
 ### Class based views
 
-A view is simply a callable which takes a request and returns a response. This can be more than just a function, and Django provides a variety of generic classes which can be used as views. These allow you to structure your views and reuse code by harnessing inheritance and mixins. See: (https://docs.djangoproject.com/en/1.11/ref/class-based-views/)
+A view is simply a callable which takes a request and returns a response. This can be more than just a function, and Django provides a variety of generic classes which can be used as views. These allow you to structure your views and reuse code by harnessing inheritance and mixins. See: (https://docs.djangoproject.com/en/2.2/ref/class-based-views/)
 
-So in our views.py, instead of hand crafting CRUD functions we can leverage the generic class based views to do the same thing in a very small amount of code:
+So in our `views.py`, instead of hand crafting CRUD functions we can leverage the generic class based views to do the same thing in a very small amount of code:
 
 ```python
 from django.shortcuts import render
@@ -432,7 +431,7 @@ class todo_delete(DeleteView):
     success_url = reverse_lazy('todo_list')
 ```
 
-We'll also need to update our urls.py to link to these:
+We'll also need to update our `urls.py` to link to these:
 ```python
 urlpatterns = [
     url(r'^$', views.index, name='index'),
@@ -520,8 +519,6 @@ Let's create this ```base.html```, which all the other snippets will leverage. F
 
     </body>
 </html>
-
-
 ```
 
 
@@ -682,12 +679,11 @@ www.djangoproject.com
 
 
 Django Plugins
-
-django-extensions
-django-modelutils
-django-crispyforms
+- django-extensions
+- django-modelutils
+- django-crispyforms
 
 Make your stuff pretty
-Bootstrap
-
+- Bootstrap
+- FontAwesome
 
