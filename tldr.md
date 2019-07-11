@@ -45,8 +45,9 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+
 class Todo(models.Model):
-    user =  models.ForeignKey(User, null=True, blank=True)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     description = models.CharField(max_length=128, null=False, blank=False)
     due_date = models.DateField(null=True, blank=True)
 
@@ -69,7 +70,6 @@ from django.contrib import admin
 from .models import Todo
 
 admin.site.register(Todo)
-
 ```
 
 
@@ -82,36 +82,35 @@ open htpp://127.0.0.1:8000
 **todos/urls.py**
 
 ```python
-from django.conf.urls import url
+from django.urls import path
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^todos/$', views.todo_list.as_view(), name='todo_list'),
-    url(r'^todo/create/$', views.todo_create.as_view(), name='todo_create')
+    path('', views.index, name='index'),
+    path('todos/', views.todo_list.as_view(), name='todo_list'),
+    path('todo/create/', views.todo_create.as_view(), name='todo_create')
 ]
 ```
 
 **myproject/urls.py**
 
 ```python
-from django.conf.urls import include, url
 from django.contrib import admin
+from django.urls import include, path
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 
-
 urlpatterns = [
-    url(r'^accounts/login/', LoginView.as_view(), name="user_login"),
-    url(r'^accounts/logout/', LogoutView.as_view(), name="user_logout"),
-    url(r'^accounts/register/', CreateView.as_view(
-            template_name='registration/register.html',
-            form_class=UserCreationForm,
-            success_url='/'
+    path('accounts/login/', LoginView.as_view(), name="user_login"),
+    path('accounts/logout/', LogoutView.as_view(), name="user_logout"),
+    path('accounts/register/', CreateView.as_view(
+        template_name='registration/register.html',
+        form_class=UserCreationForm,
+        success_url='/'
     )),
-    url(r'^admin/', admin.site.urls),
-    url(r'^', include('todos.urls')),
+    path('admin/', admin.site.urls),
+    path('', include('todos.urls')),
 ]
 ```
 
@@ -119,7 +118,7 @@ urlpatterns = [
 
 ```python
 from django.shortcuts import render
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
@@ -151,13 +150,19 @@ class todo_create(CreateView):
 
     def get_success_url(self):
         return reverse('todo_list')
-
 ```
 
 
 ```bash
 mkdir -p todos/templates/todos/
 mkdir -p todos/templates/registration/
+mkdir -p todos/templates/todos
+touch todos/templates/base.html
+touch todos/templates/registration/login.html
+touch todos/templates/registration/register.html
+touch todos/templates/todos/index.html
+touch todos/templates/todos/todo_list.html
+touch todos/templates/todos/todo_form.html
 ```
 
 **todos/templates/base.html**
@@ -165,67 +170,62 @@ mkdir -p todos/templates/registration/
 ```html
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>To Do</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Bootstrap core CSS -->
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<head>
+    <title>ToDo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
-        <![endif]-->
-    </head>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
 
-    <body>
+<body>
 
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/">Home</a>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            {% if request.user.username %}
-                                <a href="/accounts/logout/">Logout: {{ request.user.username }}</a>
-                            {% else %}
-                                <a href="/accounts/login/">Login</a>
-                            {% endif %}
-                        </li>
-                        <li>
-                            <a href="/accounts/register/">Register</a>
-                        </li>
-                    </ul>
-                </div>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Todo <i class="fas fa-clipboard-list"></i></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="">
+            <ul class="navbar-nav mr-auto"></ul>
+            <span class="navbar-text">
+                {% if request.user.username %}
+                <a href="/accounts/logout/">Logout</a>
+                {% else %}
+                <a href="/accounts/login/">Login</a> / 
+                <a href="/accounts/register/">Register</a>
+                {% endif %}
+            </span>
+            
+        </div>
+    </nav>
+    <br>
+    <main role="main" class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                {% block body %}{% endblock %}
             </div>
-        </nav>
+        </div>
+    </main> <!-- /container -->
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12">
-                    {% block body %}{% endblock %}
-                </div>
-            </div>
-        </div> <!-- /container-fluid -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
 
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
 
-    </body>
 </html>
-
 ```
 
 **todos/templates/registration/login.html**
@@ -235,8 +235,8 @@ mkdir -p todos/templates/registration/
 
 {% block body %}
 <form action="" method="post">{% csrf_token %}
-{{form}}
-<input type="submit" value="Confirm" />
+    {{form}}
+    <input type="submit" value="Confirm" />
 </form>
 {% endblock %}
 ```
@@ -248,8 +248,8 @@ mkdir -p todos/templates/registration/
 
 {% block body %}
 <form action="" method="post">{% csrf_token %}
-{{form}}
-<input type="submit" value="Confirm" />
+    {{form}}
+    <input type="submit" value="Confirm" />
 </form>
 {% endblock %}
 ```
@@ -261,16 +261,17 @@ mkdir -p todos/templates/registration/
 
 {% block body %}
 
-Todo Count by User:<br>
+<h3>Todo count by user:</h3>
 <ul class="list-group">
     {%  for obj in todos_by_user %}
-    <li class="list-group-item">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
         {{ obj.username }}
-        <span class="badge">{{ obj.num_todos }}</span>
+        <span class="badge badge-primary badge-pill">{{ obj.num_todos }}</span>
     </li>
     {% endfor %}
 </ul>
-<a href="{% url 'todo_list' %}">List all todos</a>
+<br>
+<a class="btn btn-primary" href="{% url 'todo_list' %}">List all Todos</a>
 
 {% endblock %}
 ```
@@ -281,22 +282,38 @@ Todo Count by User:<br>
 {% extends 'base.html' %}
 
 {% block body %}
-<a href="{% url 'todo_create' %}">Create a new Todo</a>
-<br><br>
 
 {% if not object_list %}
 <p>You don't have any todo's. Click the link above to make one</p>
 {% else %}
-<ul class="list-group">
-    {%  for obj in object_list %}
-    <li class="list-group-item">
-        {{ obj.description }}
-        <span class="badge">{{ obj.due_date }}</span>
-    </li>
-    {% endfor %}
-</ul>
+<form class="form-inline">
+    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+    <button class="btn btn-secondary my-sm-0" type="submit">Search</button>
+</form>
+<br>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">For</th>
+                <th scope="col">Description</th>
+                <th scope="col">Due</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%  for obj in object_list %}
+            <tr>
+                <th scope="row">{{ obj.user.username }}</th>
+                <td>{{ obj.description }}</td>
+                <td>{{ obj.due_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endif %}
-
+<br>
+<a class="btn btn-primary" href="{% url 'todo_create' %}">New Todo</a>
 {% endblock %}
 ```
 
